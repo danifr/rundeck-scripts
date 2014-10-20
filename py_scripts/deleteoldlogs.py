@@ -3,11 +3,26 @@ import xml.etree.ElementTree as ET
 import time
 
 API_KEY='myAPIkeyfglIdHkIuRerDBPhgt'
-PROJECT_NAME = 'Myproject'
 RUNDECKSERVER = 'https://yourrundeckserver.com'
 
 MILISECONDS_IN_THREE_MONTHS = 7889000000
 TODAY = int(round(time.time() * 1000))
+
+# API call to get the list of the existing projects on the server.
+def listProjects():
+    url = 'https://'+ RUNDECKSERVER +':4443/api/1/projects'
+    headers = {'Content-Type': 'application/json','X-RunDeck-Auth-Token': API_KEY }
+    r = requests.get(url, headers=headers, verify=False)
+    return r.text
+    
+# Returns list of all the project names
+def getProjectNames(projectsinfo_xml):
+    project_names = []
+    root = ET.fromstring(projectsinfo_xml)
+    for projects in root:	
+        for name in projects.findall('project'):
+            project_names.append(name.find('name').text)
+    return project_names   
 
 # API call to get the list of the jobs that exist for a project.
 def listJobsForProject(project_mame):
@@ -57,11 +72,13 @@ def isOlderThan90days(execution_date, today):
         return True
     return False
 
-def check(execid_dates):
+def checkDeletion(execid_dates):
     for exec_id, exec_date in execid_dates.iteritems():
     	if isOlderThan90days (int(exec_date), TODAY):
-    	    getExecutionDate(exec_id)
-    	       
-jobids = getJobIDs(listJobsForProject(PROJECT_NAME))
-for jobid in jobids:
-    check(getExecutionDate(getExecutionsForAJob(jobid)))
+    	    deleteExecution(exec_id)
+    	      
+projects = getProjectNames(listProjects())
+for project in projects:
+    jobids = getJobIDs(listJobsForProject(project))
+    for jobid in jobids:
+        checkDeletion(getExecutionDate(getExecutionsForAJob(jobid))) 
