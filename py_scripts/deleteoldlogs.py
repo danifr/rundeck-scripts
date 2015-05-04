@@ -4,13 +4,14 @@ import time
 
 API_KEY='myAPIkeyfglIdHkIuRerDBPhgt'
 RUNDECKSERVER = 'https://yourrundeckserver.com'
+RUNDECKSERVER = '4443'
 
 MILISECONDS_IN_THREE_MONTHS = 7889000000
 TODAY = int(round(time.time() * 1000))
 
 # API call to get the list of the existing projects on the server.
 def listProjects():
-    url = 'https://'+ RUNDECKSERVER +':4443/api/1/projects'
+    url = 'https://'+ RUNDECKSERVER +':'+RUNDECKPORT+'/api/1/projects'
     headers = {'Content-Type': 'application/json','X-RunDeck-Auth-Token': API_KEY }
     r = requests.get(url, headers=headers, verify=False)
     return r.text
@@ -26,7 +27,7 @@ def getProjectNames(projectsinfo_xml):
 
 # API call to get the list of the jobs that exist for a project.
 def listJobsForProject(project_mame):
-    url = 'https://'+ RUNDECKSERVER +':4443/api/1/jobs'
+    url = 'https://'+ RUNDECKSERVER +':'+RUNDECKPORT+'/api/1/jobs'
     payload = { 'project':  project_mame }
     headers = {'Content-Type': 'application/json','X-RunDeck-Auth-Token': API_KEY }
     r = requests.get(url, params=payload, headers=headers, verify=False)
@@ -43,7 +44,7 @@ def getJobIDs(jobsinfo_xml):
 
 # API call to get the list of the executions for a Job.      
 def getExecutionsForAJob(job_id):
-    url = 'https://'+ RUNDECKSERVER +':4443/api/1/job/'+job_id+'/executions'
+    url = 'https://'+ RUNDECKSERVER +':'+RUNDECKPORT+'/api/1/job/'+job_id+'/executions'
     headers = {'Content-Type': 'application/json','X-RunDeck-Auth-Token': API_KEY }
     r = requests.get(url, headers=headers, verify=False)
     return r.text
@@ -62,7 +63,7 @@ def getExecutionDate(executionsinfo_xml):
        
 #API call to delete an execution by ID
 def deleteExecution(execution_id):
-    url = 'https://'+ RUNDECKSERVER +':4443/api/12/execution/'+execution_id
+    url = 'https://'+ RUNDECKSERVER +':'+RUNDECKPORT+'/api/12/execution/'+execution_id
     headers = {'Content-Type': 'application/json','X-RunDeck-Auth-Token': API_KEY }
     r = requests.delete(url, headers=headers, verify=False)    
 
