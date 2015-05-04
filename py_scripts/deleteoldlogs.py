@@ -5,9 +5,9 @@ import time
 API_KEY='xx'
 RUNDECKSERVER = 'http://127.0.0.1'
 RUNDECKPORT='80'
-EXPIRE_DAY = 20
+EXPIRE_DAYS = 20
 TODAY = int(round(time.time() * 1000))
-EXPIRE_MILISECONDS = EXPIRE_DAY * 24 * 60 * 60 * 1000
+EXPIRE_MILISECONDS = EXPIRE_DAYS * 24 * 60 * 60 * 1000
 
 
 # API call to get the list of the existing projects on the server.
