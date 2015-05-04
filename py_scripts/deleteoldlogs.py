@@ -68,17 +68,16 @@ def deleteExecution(execution_id):
     headers = {'Content-Type': 'application/json','X-RunDeck-Auth-Token': API_KEY }
     r = requests.delete(url, headers=headers, verify=False)    
 
-    
-def isOlderThan90days(execution_date, today):
+def isOlderThanExpireDays(execution_date, today):
     if ((today - execution_date) > EXPIRE_MILISECONDS):
         return True
     return False
 
 def checkDeletion(execid_dates):
     for exec_id, exec_date in execid_dates.iteritems():
-    	if isOlderThan90days (int(exec_date), TODAY):
+        if isOlderThanExpireDays(int(exec_date), TODAY):
     	    deleteExecution(exec_id)
-    	      
+
 projects = getProjectNames(listProjects())
 for project in projects:
     print 'project:\t'+project
