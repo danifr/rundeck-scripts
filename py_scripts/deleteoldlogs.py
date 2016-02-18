@@ -15,7 +15,7 @@ def listProjects():
     url =  RUNDECKSERVER +':'+RUNDECKPORT+'/api/1/projects'
     headers = {'Content-Type': 'application/json','X-RunDeck-Auth-Token': API_KEY }
     r = requests.get(url, headers=headers, verify=False)
-    return r.text
+    return r.text.encode('utf-8')
     
 # Returns list of all the project names
 def getProjectNames(projectsinfo_xml):
@@ -32,7 +32,7 @@ def listJobsForProject(project_mame):
     payload = { 'project':  project_mame }
     headers = {'Content-Type': 'application/json','X-RunDeck-Auth-Token': API_KEY }
     r = requests.get(url, params=payload, headers=headers, verify=False)
-    return r.text
+    return r.text.encode('utf-8')
 
 # Returns list of all the jobids
 def getJobIDs(jobsinfo_xml):
@@ -48,7 +48,7 @@ def getExecutionsForAJob(job_id):
     url =  RUNDECKSERVER +':'+RUNDECKPORT+'/api/1/job/'+job_id+'/executions'
     headers = {'Content-Type': 'application/json','X-RunDeck-Auth-Token': API_KEY }
     r = requests.get(url, headers=headers, verify=False)
-    return r.text
+    return r.text.encode('utf-8')
 
 # Returns a dict {'execution_id01': 'execution_date01', 'execution_id02': 'execution_date02', ... }
 def getExecutionDate(executionsinfo_xml):
