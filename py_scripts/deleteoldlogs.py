@@ -2,10 +2,10 @@ import requests
 import xml.etree.ElementTree as ET
 import time
 
-API_KEY='xx'
-RUNDECKSERVER = 'http://127.0.0.1'
-RUNDECKPORT='80'
-EXPIRE_DAYS = 20
+API_KEY='ZtD4MM7NXRF5vfuxUSwEzAGruZ5dnom4'
+RUNDECKSERVER = 'http://localhost'
+RUNDECKPORT='4440'
+EXPIRE_DAYS = 1
 TODAY = int(round(time.time() * 1000))
 EXPIRE_MILISECONDS = EXPIRE_DAYS * 24 * 60 * 60 * 1000
 
